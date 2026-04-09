@@ -10,21 +10,22 @@ def main():
 
     tracker = HandTracker(max_hands=2, detection_confidence=0.5, tracking_confidence=0.5)
 
-    while True:
-        success, frame = cap.read()
-        if not success:
-            print("Error: Failed to read frame from camera.")
-            break
+    try:
+        while True:
+            success, frame = cap.read()
+            if not success:
+                print("Error: Failed to read frame from camera.")
+                break
 
-        frame = tracker.find_hands(frame)
+            frame = tracker.find_hands(frame)
 
-        cv2.imshow("Hand Tracking", frame)
+            cv2.imshow("Hand Tracking", frame)
 
-        if cv2.waitKey(1) & 0xFF == ord("q"):
-            break
-
-    cap.release()
-    cv2.destroyAllWindows()
+            if cv2.waitKey(1) & 0xFF == ord("q"):
+                break
+    finally:
+        cap.release()
+        cv2.destroyAllWindows()
 
 
 if __name__ == "__main__":
